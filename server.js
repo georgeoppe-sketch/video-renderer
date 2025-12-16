@@ -3,18 +3,19 @@ const app = express();
 
 app.use(express.json());
 
+// Health check (optional)
 app.get("/", (req, res) => {
   res.json({ status: "Video renderer running" });
 });
 
-app.post("/render", async (req, res) => {
+// IMPORTANT: ROOT POST ENDPOINT
+app.post("/", async (req, res) => {
   console.log("Render request received");
-  console.log("Body:", req.body);
+  console.log(req.body);
 
-  // MUST return video_url (Lovable requires this)
+  // TEMP: fake video output to satisfy Lovable
   res.json({
-    success: true,
-    video_url: "https://example.com/fake-video.mp4"
+    videoUrl: "https://example.com/fake-video.mp4"
   });
 });
 
