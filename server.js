@@ -3,25 +3,26 @@ const app = express();
 
 app.use(express.json());
 
-// Health check (used by browser + Render)
+// Health check
 app.get("/", (req, res) => {
   res.json({ status: "Video renderer running" });
 });
 
-// 🔥 THIS IS WHAT LOVABLE CALLS
-// Lovable ALWAYS does: POST /render
+// REQUIRED endpoint
 app.post("/render", async (req, res) => {
-  console.log("🔥 /render called");
-  console.log("Request body:", req.body);
+  console.log("Render request received");
 
-  // TEMP: return a fake video so Lovable succeeds
-  // (we will replace this with real FFmpeg later)
+  // TEMP: fake success response (to unblock Lovable)
+  // Real FFmpeg comes later
+  const fakeVideoUrl = `https://${process.env.RENDER_EXTERNAL_HOSTNAME}`;
+
   res.json({
-    videoUrl: "https://example.com/test-video.mp4"
+    success: true,
+    video_url: fakeVideoUrl
   });
 });
 
-// ⚠️ MUST BE LAST
+// Must be last
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
