@@ -1,15 +1,21 @@
+// imports
 const express = require("express");
-const cors = require("cors");
-
 const app = express();
-app.use(cors());
+
 app.use(express.json());
 
+// existing routes
 app.get("/", (req, res) => {
   res.json({ status: "Video renderer running" });
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log("Server running on port", PORT);
+// ✅ ADD THIS UNDER EXISTING ROUTES
+app.post("/render", async (req, res) => {
+  console.log("Render request received");
+  res.json({ success: true });
+});
+
+// ⚠️ MUST STAY LAST
+app.listen(process.env.PORT || 3000, () => {
+  console.log("Server running");
 });
