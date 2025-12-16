@@ -9,18 +9,15 @@ app.get("/", (req, res) => {
 
 app.post("/render", async (req, res) => {
   console.log("Render request received");
-  console.log("Payload:", req.body);
+  console.log("Body:", req.body);
 
-  // TEMP: fake output video (confirms pipeline works)
-  const videoUrl = `https://${process.env.RENDER_EXTERNAL_HOSTNAME}/test.mp4`;
-
+  // MUST return video_url (Lovable requires this)
   res.json({
     success: true,
-    video_url: videoUrl
+    video_url: "https://example.com/fake-video.mp4"
   });
 });
 
 app.listen(process.env.PORT || 3000, () => {
   console.log("Server running");
 });
-
